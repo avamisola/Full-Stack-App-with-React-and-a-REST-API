@@ -1,19 +1,18 @@
 import React,{Component} from 'react';
 import CourseItem from './CourseItem';
 import {NavLink} from 'react-router-dom';
+
 class Courses extends Component {
-    
     state = {
         courses: [],
-    
     }
-    
+    //set to courses state after mounting
     componentDidMount(){
         fetch('http://localhost:5000/api/courses')
             .then(res => res.json())
             .then(courses => this.setState({courses}));
     }
-
+    //retrieve list of courses from rest api
     getAllCourses(){
         return(
             this.state.courses.map((course,i) => {
@@ -23,7 +22,7 @@ class Courses extends Component {
             })
         );
     }
-
+    //render list of courses and link to create course
     render(){
         return(
             <div className="bounds">
@@ -36,8 +35,7 @@ class Courses extends Component {
                             <polygon points="7,6 7,0 6,0 6,6 0,6 0,7 6,7 6,13 7,13 7,7 13,7 13,6 "></polygon>
                         </svg>New Course</h3>
                     </NavLink>
-                </div>
-                
+                </div>  
             </div>
         );
     }

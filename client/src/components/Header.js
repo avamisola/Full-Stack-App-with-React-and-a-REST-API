@@ -1,10 +1,8 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 
 export default ({ context }) => {
   const authUser = context.authenticatedUser;
-
   return (
     <div className="header">
       <div className="bounds">

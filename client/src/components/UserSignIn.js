@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Form from "./Form";
 
 export default class UserSignIn extends Component {
+
   state = {
     email: "",
     password: "",
@@ -41,14 +42,12 @@ export default class UserSignIn extends Component {
               </React.Fragment>
             )}
           />
-          <p>
-            Don't have a user account? <Link to="/signup">Click here</Link> to
-            sign up!
-          </p>
+          <p>Don't have a user account? <Link to="/signup">Click here</Link> to sign up!</p>
         </div>
       </div>
     );
-  }
+  };
+
   change = event => {
     const name = event.target.name;
     const value = event.target.value;
@@ -62,9 +61,7 @@ export default class UserSignIn extends Component {
 
   submit = () => {
     const { context } = this.props;
-    const { from } = this.props.location.state || {
-      from: { pathname: "/" }
-    };
+    const { from } = this.props.location.state || { from: {pathname: "/"} };
     const { email, password } = this.state;
     context.actions
       .signIn(email, password)
@@ -78,12 +75,12 @@ export default class UserSignIn extends Component {
         }
       })
       .catch(error => {
-        console.error(error);
         this.props.history.push("/error");
-      });
+      })
   };
 
   cancel = () => {
     this.props.history.push("/");
   };
+
 }

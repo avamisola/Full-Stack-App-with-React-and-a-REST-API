@@ -7,10 +7,11 @@ import Header from "./components/Header";
 import Courses from './components/Courses';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from "./components/UpdateCourse";
-import CourseDetail from './components/CourseDetail.js';
+import CourseDetail from './components/CourseDetail';
 import UserSignIn from "./components/UserSignIn";
 import UserSignUp from "./components/UserSignUp";
 import UserSignOut from "./components/UserSignOut";
+import UnhandledError from './components/UnhandledError';
 import withContext from "./Context";
 
 //pass context to each component 
@@ -35,6 +36,7 @@ export default () => (
         <Route path="/signin" component={UserSignInWithContext} />
         <Route path="/signup" component={UserSignUpWithContext} />
         <Route path="/signout" component={UserSignOutWithContext} />
+        <Route path="/error" component={UnhandledError} />
       </Switch>
     </div>
   </Router>

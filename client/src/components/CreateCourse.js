@@ -80,7 +80,7 @@ export default class CreateCourses extends Component {
 
   submit = () => {
       const { title, description, estimatedTime, materialsNeeded, context} = this.state;
-      const { email, password} = context.authenticatedUser;
+      const { email, password } = context.authenticatedUser;
 
       const course = {
         title,

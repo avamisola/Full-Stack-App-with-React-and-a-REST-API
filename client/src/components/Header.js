@@ -6,25 +6,19 @@ export default ({ context }) => {
   return (
     <div className="header">
       <div className="bounds">
-        <h1 className="header--logo">Course App</h1>
+        <h1 className="header--logo">Courses</h1>
         <nav>
-          {authUser ? (
+          {authUser ?
             <React.Fragment>
-              <span>
-                Welcome, {authUser.name}!
-              </span>
+              <span>Welcome, {authUser.name}!</span>
               <Link to="/signout">Sign Out</Link>
             </React.Fragment>
-          ) : (
+            :
             <React.Fragment>
-              <Link className="signup" to="/signup">
-                Sign Up
-              </Link>
-              <Link className="signin" to="/signin">
-                Sign In
-              </Link>
+              <Link className="signup" to="/signup">Sign Up</Link>
+              <Link className="signin" to="/signin">Sign In</Link>
             </React.Fragment>
-          )}
+          }
         </nav>
       </div>
     </div>

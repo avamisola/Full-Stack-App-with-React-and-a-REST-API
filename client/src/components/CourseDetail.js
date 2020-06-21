@@ -18,14 +18,16 @@ export default class CourseDetail extends Component {
     }
   
     componentDidMount(){
+        const { context } = this.props;
         fetch(`http://localhost:5000/api/courses/${this.state.params.id}`)
             .then( response => response.json())
             .then( responseData => {
                 this.setState({ 
                 course: responseData,
                 loaded: true,
-                user: responseData.creator
-
+                user: responseData.creator,
+                context: this.props.context,
+                authenticatedUser: context.authenticatedUser
                 });
             return responseData
             })
@@ -33,9 +35,10 @@ export default class CourseDetail extends Component {
 
     submit = () => {
 
+
         const { context } = this.props;
         const { email, password } = context.authenticatedUser;
-    
+
         const path = `/courses/${this.state.params.id}`;
 
         if (context.authenticatedUser.id.toString() === this.state.course.userId.toString()) {
@@ -78,9 +81,18 @@ export default class CourseDetail extends Component {
         let buttons;
 
         if (this.props.context.authenticatedUser) {
-            console.log(this.props.context.authenticatedUser.id.toString())
 
-            if (this.props.context.authenticatedUser.id === this.state.user.id) {
+            console.log(this.state.course.userId);
+
+            const currentUserId = this.props.context.authenticatedUser.id.toString();
+            //const courseUserId = this.state.course.userId.toString();
+
+
+            console.log(currentUserId);
+            //console.log(courseUserId);
+            
+
+            if (currentUserId === this.state.course.userId) {
                 buttons = (           
                 <div className="grid-100"><span>
                     <Link className="button" to={`/courses/${this.state.params.id}/update`}>Update Course</Link>

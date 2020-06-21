@@ -32,7 +32,7 @@ export default class CreateCourses extends Component {
 
     return (
       <div className="bounds course--detail">
-        <h1>Create Course test</h1>
+        <h1>Create Course</h1>
         <div>
           <ErrorsDisplay errors={errors} />
           <form onSubmit={this.handleSubmit}>

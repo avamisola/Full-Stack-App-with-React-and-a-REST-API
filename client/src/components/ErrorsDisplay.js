@@ -1,22 +1,21 @@
 import React from 'react';
 
 function ErrorsDisplay(props) {
-    let errorsDisplay = null;
+    let errorList = null;
     const errors = props.errors;
-
     if (errors.length) {
-        errorsDisplay = (
+        errorList = (
         <div>
-            <h2 className="validation--errors--label">Oh Oh! There was an Error</h2>
+            <h2 className="validation--errors--label">Validation errors</h2>
             <div className="validation-errors">
             <ul>
-                {errors.map((error, i) => <li key={i}>{error}</li>)}
+                { errors.map((item,i) => <li key={i}>{item}</li>) }
             </ul>
             </div>
         </div>
         );
     }
-    return errorsDisplay;
+    return errorList;
 }
 
 export default ErrorsDisplay;

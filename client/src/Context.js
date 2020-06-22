@@ -36,17 +36,16 @@ export class Provider extends Component {
     }
   }
 
-  signIn = async (id, email, password) => {
-    const user = await this.data.getUser(id, email, password);
+  signIn = async (email, password) => {
+    const user = await this.data.getUser(email, password);
+    console.log ( user )
     if (user !== null) {
-      const currentUser = Object.assign({}, user, { id, email, password });
-
-      console.log (currentUser)
-      
+      const userObject = Object.assign({}, user, { email, password });
       this.setState(() => {
-        return { authenticatedUser: currentUser };
+        return { authenticatedUser: userObject };
       });
-      Cookies.set("authenticatedUser", JSON.stringify(currentUser), { expires: 1 });
+      Cookies.set("authenticatedUser", JSON.stringify(userObject), { expires: 1 });
+      Cookies.set("password", JSON.stringify(btoa(password)), { expires: 1 });
     }
     return user;
   }

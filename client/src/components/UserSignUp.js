@@ -6,7 +6,7 @@ export default class UserSignUp extends Component {
   state = {
     firstName: "",
     lastName: "",
-    emailAddress: "",
+    email: "",
     password: "",
     confirmPassword: "",
     errors: []
@@ -45,10 +45,10 @@ export default class UserSignUp extends Component {
                   placeholder="Last Name"
                 />
                 <input
-                  id="emailAddress"
-                  name="emailAddress"
+                  id="email"
+                  name="email"
                   type="text"
-                  value={this.state.emailAddress}
+                  value={this.state.email}
                   onChange={this.change}
                   placeholder="Email Address"
                 />
@@ -96,7 +96,7 @@ export default class UserSignUp extends Component {
     const {
       firstName,
       lastName,
-      emailAddress,
+      email,
       password,
       confirmPassword
     } = this.state;
@@ -104,7 +104,7 @@ export default class UserSignUp extends Component {
     const user = {
       firstName,
       lastName,
-      emailAddress,
+      email,
       password
     };
     
@@ -120,13 +120,12 @@ export default class UserSignUp extends Component {
           if (errors.length) {
             this.setState({errors});
           } else {
-            context.actions.signIn(emailAddress, password).then(() => {
+            context.actions.signIn(email, password).then(() => {
               this.props.history.push("/");
             });
           }
         })
         .catch(err => {
-          console.log(err);
           this.props.history.push("/error");
         });
     }

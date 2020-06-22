@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ErrorsDisplay from './ErrorsDisplay.js';
 
 export default class CreateCourses extends Component {
+  
   state = {
     title: '', 
     description: '', 
@@ -91,15 +92,17 @@ export default class CreateCourses extends Component {
       }
 
       context.data.createCourse(email, password, course)
-      .then( errors => {
-        if (errors.length) {
-            this.setState({errors});
-          } else {
-              this.props.history.push('/');
-          }
-      })
-      .catch( err => {
-          this.props.history.push('/error');
-      })
+        .then( errors => {
+          if (errors) {
+              console.log(errors);
+              this.setState({errors});
+            } else {
+                this.props.history.push('/');
+            }
+        })
+        .catch( err => {
+            console.log(err);
+            this.props.history.push('/error');
+        })
   }
 }

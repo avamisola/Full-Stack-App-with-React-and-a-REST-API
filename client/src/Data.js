@@ -1,4 +1,6 @@
 import config from './config';
+import Cookies from 'js-cookie';
+
 
 export default class Data {
   
@@ -17,11 +19,12 @@ export default class Data {
       const encodedCredentials = btoa(`${credentials.email}:${credentials.password}`);
       options.headers['Authorization'] = `Basic ${encodedCredentials}`;
     }
+    console.log(credentials)
     return fetch(url, options);
   }
 
   async getUser(email, password) {
-    const response = await this.api(`/users`, 'GET', null, true, {email, password});
+    const response = await this.api('/users', 'GET', null, true, {email, password});
     if (response.status === 200) {
       return response.json().then(data => data);
     }
@@ -36,7 +39,7 @@ export default class Data {
   async createUser(user) {
     const response = await this.api('/users', 'POST', user);
     if (response.status === 201) {
-      this.getUser(user.emailAddress, user.password);
+      this.getUser(user.email, user.password);
     }
     else if (response.status === 400) {
       return response.json().then(data => {
@@ -64,8 +67,22 @@ export default class Data {
     }
   }
 
-  async createCourse (email, password, course) {
-    const response = await this.api('/courses', 'POST', course, true, {email, password});
+  async createCourse (course) {
+
+    let email = null;
+    let password = null;
+    
+    if (Cookies.get('authenticatedUser')) {
+      const user = JSON.parse(Cookies.get('authenticatedUser'));
+      const hashPassword = Cookies.get('password');
+      email = user.email;
+      password = atob(JSON.parse(hashPassword));
+    }
+
+    const response = await this.api('/courses', 'POST', course, true, {email, password})
+    console.log(email, password);
+    console.log(response);
+    console.log(this.api('/courses', 'POST', course, true, {email, password}));
     if (response.status === 201) {
       return [];
     }
@@ -79,15 +96,13 @@ export default class Data {
     }
   }
 
-  async updateCourse(emailAddress, password, courseId, course) {
-    const response = await this.api('/courses/' + courseId, 'PUT', course, true, {emailAddress, password});
-    console.log(response.status);
+  async updateCourse(email, password, courseId, course) {
+    const response = await this.api('/courses/' + courseId, 'PUT', course, true, {email, password});
     if (response.status === 204) {
       return [];
     }
     else if (response.status === 400) {
       return response.json().then(data => {
-        console.log(data);
         return data;
       });
     }
@@ -101,8 +116,8 @@ export default class Data {
     }
   }
 
-  async deleteCourse(emailAddress, password, courseId) {
-    const response = await this.api('/courses/' + courseId, 'DELETE', null, true, {emailAddress, password});
+  async deleteCourse(email, password, courseId) {
+    const response = await this.api('/courses/' + courseId, 'DELETE', null, true, {email, password});
     if (response.status === 204) {
       return [];
     }

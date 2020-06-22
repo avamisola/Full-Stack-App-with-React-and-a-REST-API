@@ -1,6 +1,4 @@
 import config from './config';
-import Cookies from 'js-cookie';
-
 
 export default class Data {
   
@@ -18,8 +16,9 @@ export default class Data {
     if (requiresAuth) {
       const encodedCredentials = btoa(`${credentials.email}:${credentials.password}`);
       options.headers['Authorization'] = `Basic ${encodedCredentials}`;
+      console.log(encodedCredentials)
     }
-    console.log(credentials)
+    
     return fetch(url, options);
   }
 
@@ -67,22 +66,14 @@ export default class Data {
     }
   }
 
-  async createCourse (course) {
+  async createCourse (email, password, course) {
 
-    let email = null;
-    let password = null;
-    
-    if (Cookies.get('authenticatedUser')) {
-      const user = JSON.parse(Cookies.get('authenticatedUser'));
-      const hashPassword = Cookies.get('password');
-      email = user.email;
-      password = atob(JSON.parse(hashPassword));
-    }
 
-    const response = await this.api('/courses', 'POST', course, true, {email, password})
-    console.log(email, password);
+
+    console.log (course);
+
+    const response = await this.api('/courses', 'POST', course, true, {email, password});
     console.log(response);
-    console.log(this.api('/courses', 'POST', course, true, {email, password}));
     if (response.status === 201) {
       return [];
     }

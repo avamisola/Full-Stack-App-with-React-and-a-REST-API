@@ -35,28 +35,30 @@ export default class CourseDetail extends Component {
         const { context } = this.props;
         const { email, password } = context.authenticatedUser;
         const path = `/courses/${this.state.params.id}`;
-        if (context.authenticatedUser.id.toString() === this.state.course.userId.toString()) {
-          context.data.deleteCourse(email, password, path )
-          .then( errors => {
-            if (errors.length) {
-                this.setState({errors});
-            } else {
-                this.props.history.push('/');
-            }
-          })
-          .catch( err => {
-              this.props.history.push('/error');
-          })
+        const currentUserId = Number(this.props.context.authenticatedUser.id)
+        const courseUserId = Number(this.state.course.userId)
+        if (currentUserId === courseUserId) {
+            context.data.deleteCourse(email, password, path)
+                .then( errors => {
+                    if (errors.length) {
+                        this.setState({errors});
+                    } else {
+                        this.props.history.push('/');
+                    }
+                })
+                .catch( err => {
+                    this.props.history.push('/error');
+                })
         } else {
-            this.setState( {
-              errors: ['You are not authorized to delete this course.']
+            this.setState({
+                errors: ['Not authorized to delete course.']
             })
         }
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const confirmDelete = window.confirm("Are you sure you want to delete course?");
+        const confirmDelete = window.confirm("Delete course?");
         if (confirmDelete) {
             this.submit();
         }
@@ -68,12 +70,11 @@ export default class CourseDetail extends Component {
         if (this.props.context.authenticatedUser) {
             const currentUserId = Number(this.props.context.authenticatedUser.id)
             const courseUserId = Number(this.state.course.userId)
-
             if (currentUserId === courseUserId) {
                 buttons = (           
                 <div className="grid-100"><span>
                     <Link className="button" to={`/courses/${this.state.params.id}/update`}>Update Course</Link>
-                    <button onClick={this.handleSubmit} className="button" >Delete Course</button>
+                    <button onClick={this.handleSubmit} className="button">Delete Course</button>
                    </span>
                     <Link className="button button-secondary" to="/">Return to List</Link></div>);
             } else {
@@ -125,6 +126,6 @@ export default class CourseDetail extends Component {
                     </div>
                 </div>
             </div>
-      );
+        );
     }
 }

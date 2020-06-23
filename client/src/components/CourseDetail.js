@@ -45,9 +45,9 @@ export default class CourseDetail extends Component {
           .then( errors => {
             if (errors.length) {
                 this.setState({errors});
-              } else {
-                  this.props.history.push('/');
-              }
+            } else {
+                this.props.history.push('/');
+            }
           })
           .catch( err => {
               this.props.history.push('/error');

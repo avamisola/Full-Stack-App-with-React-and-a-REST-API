@@ -13,14 +13,14 @@ export default class CreateCourses extends Component {
     context: this.props.context
   }
 
-  handleClick = e => {
-      e.preventDefault();
-      this.props.history.push('/');
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.submit();
   }
 
-  handleSubmit = (e) => {
-      e.preventDefault();
-      this.submit();
+  handleClick = e => {
+    e.preventDefault();
+    this.props.history.push('/');
   }
 
   render() {
@@ -82,7 +82,6 @@ export default class CreateCourses extends Component {
   submit = () => {
       const { title, description, estimatedTime, materialsNeeded, context} = this.state;
       const { email, password } = context.authenticatedUser;
-
       const course = {
         title,
         description,
@@ -90,19 +89,17 @@ export default class CreateCourses extends Component {
         materialsNeeded,
         userId: context.authenticatedUser.id
       }
-
       context.data.createCourse(email, password, course)
         .then( errors => {
-          if (errors) {
-              console.log(errors);
+          if (errors.length) {
               this.setState({errors});
-            } else {
-                this.props.history.push('/');
-            }
+          } else {
+            this.props.history.push('/');
+          }
         })
         .catch( err => {
-            console.log(err);
             this.props.history.push('/error');
         })
   }
+
 }

@@ -4,6 +4,7 @@ import ErrorsDisplay from './ErrorsDisplay.js';
 import { Link } from 'react-router-dom';
 
 export default class CourseDetail extends Component {
+
     constructor(props) {
       super(props);
       this.state = {
@@ -31,16 +32,10 @@ export default class CourseDetail extends Component {
     }
 
     submit = () => {
-
-
         const { context } = this.props;
         const { email, password } = context.authenticatedUser;
-
         const path = `/courses/${this.state.params.id}`;
-
-
         if (context.authenticatedUser.id.toString() === this.state.course.userId.toString()) {
- 
           context.data.deleteCourse(email, password, path )
           .then( errors => {
             if (errors.length) {
@@ -68,20 +63,13 @@ export default class CourseDetail extends Component {
     }
 
     render() {
-
         const { errors } = this.state;
         let buttons;
-
         if (this.props.context.authenticatedUser) {
+            const currentUserId = Number(this.props.context.authenticatedUser.id)
+            const courseUserId = Number(this.state.course.userId)
 
-            console.log(this.props.context.authenticatedUser.id);
-            console.log(this.state.course.userId);
-
-
-            let currentUserId = this.props.context.authenticatedUser.id.toString();
-
-
-            if (currentUserId === this.state.course.userId) {
+            if (currentUserId === courseUserId) {
                 buttons = (           
                 <div className="grid-100"><span>
                     <Link className="button" to={`/courses/${this.state.params.id}/update`}>Update Course</Link>
@@ -100,44 +88,43 @@ export default class CourseDetail extends Component {
                 className="button button-secondary" to="/">Return to List</Link></div>
             )
         }
-
-      return (
-        <div>
-            <div className="actions--bar">
-            <div className="bounds">
-                {buttons}
-            </div>
-            </div>
-            <ErrorsDisplay errors={errors} />
-            <div className="bounds course--detail">
-                <div className="grid-66">
-                <div className="course--header">
-                    <h4 className="course--label">Course</h4>
-                    <h3 className="course--title">{this.state.course.title}</h3>
-                    <p>By {`${this.state.course.userId}`}</p>
-                </div>
-                <div className="course--description">
-                    <ReactMarkdown source={this.state.course.description} /> 
+        return (
+            <div>
+                <div className="actions--bar">
+                <div className="bounds">
+                    {buttons}
                 </div>
                 </div>
-                <div className="grid-25 grid-right">
-                <div className="course--stats">
-                    <ul className="course--stats--list">
-                    <li className="course--stats--list--item">
-                        <h4>Estimated Time</h4>
-                        <h3>{this.state.course.estimatedTime}</h3>
-                    </li>
-                    <li className="course--stats--list--item">
-                        <h4>Materials Needed</h4>
-                        <ul>
-                            <ReactMarkdown source={this.state.course.materialsNeeded} /> 
+                <ErrorsDisplay errors={errors} />
+                <div className="bounds course--detail">
+                    <div className="grid-66">
+                    <div className="course--header">
+                        <h4 className="course--label">Course</h4>
+                        <h3 className="course--title">{this.state.course.title}</h3>
+                        <p>By {`${this.state.course.userId}`}</p>
+                    </div>
+                    <div className="course--description">
+                        <ReactMarkdown source={this.state.course.description} /> 
+                    </div>
+                    </div>
+                    <div className="grid-25 grid-right">
+                    <div className="course--stats">
+                        <ul className="course--stats--list">
+                        <li className="course--stats--list--item">
+                            <h4>Estimated Time</h4>
+                            <h3>{this.state.course.estimatedTime}</h3>
+                        </li>
+                        <li className="course--stats--list--item">
+                            <h4>Materials Needed</h4>
+                            <ul>
+                                <ReactMarkdown source={this.state.course.materialsNeeded} /> 
+                            </ul>
+                        </li>
                         </ul>
-                    </li>
-                    </ul>
-                </div>
+                    </div>
+                    </div>
                 </div>
             </div>
-        </div>
       );
     }
 }

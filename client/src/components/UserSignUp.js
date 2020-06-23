@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Form from "./Form";
 
 export default class UserSignUp extends Component {
+
   state = {
     firstName: "",
     lastName: "",
@@ -13,14 +14,10 @@ export default class UserSignUp extends Component {
   };
 
   render() {
-
-
-
     return (
       <div className="bounds">
         <div className="grid-33 centered signin">
           <h1>Sign Up</h1>
-
           <Form
             cancel={this.cancel}
             errors={this.state.errors}
@@ -72,8 +69,7 @@ export default class UserSignUp extends Component {
             )}
           />
           <p>
-            Already have a user account? <Link to="/signin">Click here</Link> to
-            sign in!
+            Already have a user account? <Link to="/signin">Click here</Link> to sign in!
           </p>
         </div>
       </div>
@@ -83,7 +79,6 @@ export default class UserSignUp extends Component {
   change = event => {
     const name = event.target.name;
     const value = event.target.value;
-
     this.setState(() => {
       return {
         [name]: value
@@ -100,21 +95,19 @@ export default class UserSignUp extends Component {
       password,
       confirmPassword
     } = this.state;
-
     const user = {
       firstName,
       lastName,
       email,
       password
     };
-    
     if (confirmPassword !== password) {
       this.setState(() => {
         return {
           errors: ["Password Does Not Match Confirm Password"]
         };
       });
-    }else {
+    } else {
       context.data.createUser(user)
         .then(errors => {
           if (errors.length) {
@@ -134,4 +127,5 @@ export default class UserSignUp extends Component {
   cancel = () => {
     this.props.history.push("/");
   };
+  
 }

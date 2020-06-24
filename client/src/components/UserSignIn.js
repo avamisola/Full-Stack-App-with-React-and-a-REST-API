@@ -10,6 +10,7 @@ export default class UserSignIn extends Component {
     errors: []
   };
 
+  //render user sign in page
   render() {
     const { emailAddress, password, errors } = this.state;
     return (
@@ -48,10 +49,10 @@ export default class UserSignIn extends Component {
     );
   };
 
+  //update state based on change event
   change = event => {
     const name = event.target.name;
     const value = event.target.value;
-
     this.setState(() => {
       return {
         [name]: value
@@ -59,6 +60,7 @@ export default class UserSignIn extends Component {
     });
   };
 
+  //submit sign in details and check for errors
   submit = () => {
     const { context } = this.props;
     const { from } = this.props.location.state || { from: {pathname: "/"} };
@@ -68,7 +70,7 @@ export default class UserSignIn extends Component {
       .then(user => {
         if (user === null) {
           this.setState(() => {
-            return { errors: ["Sign-in was unsuccessful"] };
+            return { errors: ["Unable to sign in."] };
           });
         } else {
           this.props.history.push(from);

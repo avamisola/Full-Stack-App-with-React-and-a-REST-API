@@ -1,6 +1,7 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 
+//html for course items on courses screen
 const CourseItem = ({course}) => {
     return(
         <div className="grid-33">

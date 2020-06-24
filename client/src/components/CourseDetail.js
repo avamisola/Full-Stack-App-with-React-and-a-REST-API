@@ -18,6 +18,7 @@ export default class CourseDetail extends Component {
       };
     }
   
+    //set state after mounting
     componentDidMount(){
         const { context } = this.props;
         fetch(`http://localhost:5000/api/courses/${this.state.params.id}`)
@@ -33,6 +34,7 @@ export default class CourseDetail extends Component {
             })
     }
 
+    //delete course if authorized user
     submit = () => {
         const { context } = this.props;
         const { emailAddress, password } = context.authenticatedUser;
@@ -66,6 +68,7 @@ export default class CourseDetail extends Component {
         }
     }
 
+    //add update and delete buttons if authorized user
     render() {
         const {errors} = this.state;
         let buttons;

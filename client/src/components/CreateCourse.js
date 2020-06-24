@@ -13,6 +13,7 @@ export default class CreateCourses extends Component {
     context: this.props.context
   }
 
+  //click and submit handlers to prevent default action
   handleSubmit = (e) => {
     e.preventDefault();
     this.submit();
@@ -23,6 +24,7 @@ export default class CreateCourses extends Component {
     this.props.history.push('/');
   }
 
+  //render create course screen
   render() {
     const {
       title, 
@@ -68,10 +70,10 @@ export default class CreateCourses extends Component {
     );
   }
 
+  //update state based on change event
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-
     this.setState(() => {
         return {
         [name]: value
@@ -79,6 +81,7 @@ export default class CreateCourses extends Component {
     });
   }
 
+  //submit new course details and check for errors
   submit = () => {
       const { title, description, estimatedTime, materialsNeeded, context} = this.state;
       const { emailAddress, password } = context.authenticatedUser;

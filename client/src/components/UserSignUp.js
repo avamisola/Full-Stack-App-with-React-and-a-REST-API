@@ -13,8 +13,8 @@ export default class UserSignUp extends Component {
     errors: []
   };
 
+  //render user sign up page
   render() {
-
     return (
       <div className="bounds">
         <div className="grid-33 centered signin">
@@ -75,6 +75,7 @@ export default class UserSignUp extends Component {
     );
   }
 
+  //update state based on change event
   change = event => {
     const name = event.target.name;
     const value = event.target.value;
@@ -85,6 +86,7 @@ export default class UserSignUp extends Component {
     });
   };
 
+  //submit sign up details and check for errors
   submit = () => {
     const { context } = this.props;
     const {

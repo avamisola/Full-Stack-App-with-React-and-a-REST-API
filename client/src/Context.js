@@ -12,6 +12,7 @@ export class Provider extends Component {
     this.state = {authenticatedUser: Cookies.getJSON('authenticatedUser') || null};
   }
 
+  //setup context provider
   render() {
     const value = {
       authenticatedUser: this.state.authenticatedUser,
@@ -26,6 +27,7 @@ export class Provider extends Component {
     return (<Context.Provider value={value}>{this.props.children}</Context.Provider>);
   }
 
+  //pass context to functions
   getCourses = async () => {
     const response = await this.callApi('/courses', 'GET', null);
     if (response.status === 200) {
@@ -58,6 +60,7 @@ export class Provider extends Component {
 
 }
 
+//setup context consumer
 export const Consumer = Context.Consumer;
 
 export default function withContext(Component) {

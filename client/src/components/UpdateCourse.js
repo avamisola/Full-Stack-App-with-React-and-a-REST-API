@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ErrorsDisplay from './ErrorsDisplay.js';
 
 export default class UpdateCourse extends Component {
+
   constructor(props) {
     super(props);
       this.state = {
@@ -13,13 +14,13 @@ export default class UpdateCourse extends Component {
           params: this.props.match.params,
           user: [],
           context: this.props.context,
-          errors: [],
-          loaded: false
+          errors: []
         };
         this.change = this.change.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
       }
     
+    //set state after mounting
     componentDidMount(){
       fetch(`http://localhost:5000/api/courses/${this.state.params.id}`)
         .then( response => response.json())
@@ -30,7 +31,6 @@ export default class UpdateCourse extends Component {
             estimatedTime: responseData.estimatedTime,
             materialsNeeded: responseData.materialsNeeded,
             course_id: responseData.id,
-            loaded: true,
             user: responseData.creator
             });
         return responseData
@@ -38,6 +38,7 @@ export default class UpdateCourse extends Component {
 
     }
   
+    //click and submit handlers to prevent default action
     handleSubmit = (e) => {
       e.preventDefault();
       this.submit();
@@ -48,12 +49,8 @@ export default class UpdateCourse extends Component {
       this.props.history.push(`/courses/${this.state.course_id}`);
     }
 
+    //render update course screen
     render() {
-      if (this.state.loaded) {
-        if (!this.state.course_id) {
-          window.location.replace('/notfound');
-        }
-    }
         const {
           title, 
           description, 
@@ -104,10 +101,10 @@ export default class UpdateCourse extends Component {
     );
   }
 
+  //update state based on change event
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-
     this.setState(() => {
         return {
         [name]: value
@@ -115,6 +112,7 @@ export default class UpdateCourse extends Component {
     });
   }
 
+  //submit updated course details if authorized user and check for errors
   submit = () => {
     const { context } = this.props;
     const { title, description, estimatedTime, materialsNeeded,} = this.state

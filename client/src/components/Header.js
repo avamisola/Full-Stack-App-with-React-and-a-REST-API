@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+//create the header for link to main page and signing in
 export default ({ context }) => {
   const authUser = context.authenticatedUser;
   return (

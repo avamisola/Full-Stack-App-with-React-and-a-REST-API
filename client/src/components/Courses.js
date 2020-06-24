@@ -6,13 +6,13 @@ class Courses extends Component {
     state = {
         courses: [],
     }
-    //set to courses state after mounting
+    //set state after mounting
     componentDidMount(){
         fetch('http://localhost:5000/api/courses')
             .then(res => res.json())
             .then(courses => this.setState({courses}));
     }
-    //retrieve list of courses from rest api
+    //add course items
     getAllCourses(){
         return(
             this.state.courses.map((course,i) => {
@@ -22,7 +22,7 @@ class Courses extends Component {
             })
         );
     }
-    //render list of courses and link to create course
+    //render course items and link to create course
     render(){
         return(
             <div className="bounds">

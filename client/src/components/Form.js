@@ -1,5 +1,6 @@
 import React from "react";
 
+//prevent default actions on click and submit events
 export default props => {
   const { cancel, errors, submit, submitButtonText, elements } = props;
   function handleSubmit(event) {
@@ -28,6 +29,7 @@ export default props => {
   );
 };
 
+//display validation errors
 function ErrorsDisplay({ errors }) {
   let errorList = null;
   if (errors.length) {

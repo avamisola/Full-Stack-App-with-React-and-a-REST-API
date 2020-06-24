@@ -1,5 +1,6 @@
 import React from 'react';
 
+//unhandled error page
 const UnhandledError = () => {
     return(
         <div className="bounds">

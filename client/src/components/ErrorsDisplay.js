@@ -1,5 +1,6 @@
 import React from 'react';
 
+//display validation errors
 function ErrorsDisplay(props) {
     let errorList = null;
     const errors = props.errors;

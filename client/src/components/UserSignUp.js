@@ -7,13 +7,14 @@ export default class UserSignUp extends Component {
   state = {
     firstName: "",
     lastName: "",
-    email: "",
+    emailAddress: "",
     password: "",
     confirmPassword: "",
     errors: []
   };
 
   render() {
+
     return (
       <div className="bounds">
         <div className="grid-33 centered signin">
@@ -42,10 +43,10 @@ export default class UserSignUp extends Component {
                   placeholder="Last Name"
                 />
                 <input
-                  id="email"
-                  name="email"
+                  id="emailAddress"
+                  name="emailAddress"
                   type="text"
-                  value={this.state.email}
+                  value={this.state.emailAddress}
                   onChange={this.change}
                   placeholder="Email Address"
                 />
@@ -89,14 +90,14 @@ export default class UserSignUp extends Component {
     const {
       firstName,
       lastName,
-      email,
+      emailAddress,
       password,
       confirmPassword
     } = this.state;
     const user = {
       firstName,
       lastName,
-      email,
+      emailAddress,
       password
     };
     if (confirmPassword !== password) {
@@ -108,10 +109,10 @@ export default class UserSignUp extends Component {
     } else {
       context.data.createUser(user)
         .then(errors => {
-          if (errors.length) {
+          if (errors) {
             this.setState({errors});
           } else {
-            context.actions.signIn(email, password).then(() => {
+            context.actions.signIn(emailAddress, password).then(() => {
               this.props.history.push("/");
             });
           }

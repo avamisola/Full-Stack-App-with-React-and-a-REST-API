@@ -81,7 +81,7 @@ export default class CreateCourses extends Component {
 
   submit = () => {
       const { title, description, estimatedTime, materialsNeeded, context} = this.state;
-      const { email, password } = context.authenticatedUser;
+      const { emailAddress, password } = context.authenticatedUser;
       const course = {
         title,
         description,
@@ -89,7 +89,7 @@ export default class CreateCourses extends Component {
         materialsNeeded,
         userId: context.authenticatedUser.id
       }
-      context.data.createCourse(email, password, course)
+      context.data.createCourse(emailAddress, password, course)
         .then( errors => {
           if (errors.length) {
               this.setState({errors});

@@ -118,7 +118,7 @@ export default class UpdateCourse extends Component {
   submit = () => {
     const { context } = this.props;
     const { title, description, estimatedTime, materialsNeeded,} = this.state
-    const { email, password } = context.authenticatedUser;
+    const { emailAddress, password } = context.authenticatedUser;
     const course = {
       title,
       description,
@@ -130,7 +130,7 @@ export default class UpdateCourse extends Component {
     const currentUserId = Number(this.props.context.authenticatedUser.id)
     const courseUserId = Number(course.userId)
     if (currentUserId === courseUserId) {
-      context.data.updateCourse(email, password, path, course)
+      context.data.updateCourse(emailAddress, password, path, course)
         .then( errors => {
           if (errors.length) {
               this.setState({errors});

@@ -35,12 +35,12 @@ export default class CourseDetail extends Component {
 
     submit = () => {
         const { context } = this.props;
-        const { email, password } = context.authenticatedUser;
+        const { emailAddress, password } = context.authenticatedUser;
         const path = `/courses/${this.state.params.id}`;
         const currentUserId = Number(this.props.context.authenticatedUser.id)
         const courseUserId = Number(this.state.course.userId)
         if (currentUserId === courseUserId) {
-            context.data.deleteCourse(email, password, path)
+            context.data.deleteCourse(emailAddress, password, path)
                 .then( errors => {
                     if (errors.length) {
                         this.setState({errors});

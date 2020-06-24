@@ -17,7 +17,6 @@ export default class Data {
       const encodedCredentials = btoa(`${credentials.email}:${credentials.password}`);
       options.headers['Authorization'] = `Basic ${encodedCredentials}`;
     }
-    
     return fetch(url, options);
   }
 
@@ -25,11 +24,9 @@ export default class Data {
     const response = await this.api('/users', 'GET', null, true, {email, password});
     if (response.status === 200) {
       return response.json().then(data => data);
-    }
-    else if (response.status === 401) {
+    } else if (response.status === 401) {
       return null;
-    }
-    else {
+    } else {
       throw new Error();
     }
   }
@@ -38,13 +35,11 @@ export default class Data {
     const response = await this.api('/users', 'POST', user);
     if (response.status === 201) {
       this.getUser(user.email, user.password);
-    }
-    else if (response.status === 400) {
+    } else if (response.status === 400) {
       return response.json().then(data => {
         return data.errors;
       });
-    }
-    else {
+    } else {
       throw new Error();
     }
   }
@@ -54,13 +49,11 @@ export default class Data {
     if (response.status === 200) {
       const courses = await response.json().then(data => data);
       return courses;
-    }
-    else if (response.status === 400) {
+    } else if (response.status === 400) {
       return response.json().then(data => {
         return data.errors;
       });
-    }
-    else {
+    } else {
       throw new Error();
     }
   }
@@ -69,49 +62,37 @@ export default class Data {
     const response = await this.api('/courses', 'POST', course, true, {email, password});
     if (response.status === 201) {
       return [];
-    }
-    else if (response.status === 400) {
+    } else if (response.status === 400) {
       return response.json().then(data => {
         return data.errors;
       });
-    }
-    else {
+    } else {
       throw new Error();
     }
   }
 
   async deleteCourse(email, password, courseId) {
-    console.log(courseId);
     const response = await this.api(courseId, 'DELETE', null, true, {email, password});
     if (response.status === 204) {
       return [];
-    }
-    else if (response.status === 404) {
+    } else if (response.status === 404) {
       return response.json().then(data => {
         return data.errors;
       });
-    }
-    else {
+    } else {
       throw new Error();
     }
   }
 
   async updateCourse(email, password, courseId, course) {
-    const response = await this.api('/courses/' + courseId, 'PUT', course, true, {email, password});
+    const response = await this.api(courseId, 'PUT', course, true, {email, password});
     if (response.status === 204) {
       return [];
-    }
-    else if (response.status === 400) {
+    } else if (response.status === 400) {
       return response.json().then(data => {
-        return data;
+        return data.errors;
       });
-    }
-    else if (response.status === 403) {
-      return response.json().then(data => {
-        return data;
-      });
-    }
-    else {
+    } else {
       throw new Error();
     }
   }
@@ -121,13 +102,11 @@ export default class Data {
     if (response.status === 200) {
       const course = await response.json().then(data => data);
       return course;
-    }
-    else if (response.status === 404) {
+    } else if (response.status === 404) {
       return response.json().then(data => {
         return data.message;
       });
-    }
-    else {
+    } else {
       throw new Error();
     }
   }

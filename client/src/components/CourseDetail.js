@@ -9,6 +9,7 @@ export default class CourseDetail extends Component {
       super(props);
       this.state = {
         course : [],
+        student: [],
         params: props.match.params,
         user: [],
         errors:[],
@@ -24,6 +25,7 @@ export default class CourseDetail extends Component {
             .then( responseData => {
                 this.setState({ 
                 course: responseData,
+                student: responseData.student,
                 context: this.props.context,
                 authenticatedUser: context.authenticatedUser
                 });
@@ -65,7 +67,7 @@ export default class CourseDetail extends Component {
     }
 
     render() {
-        const { errors } = this.state;
+        const {errors} = this.state;
         let buttons;
         if (this.props.context.authenticatedUser) {
             const currentUserId = Number(this.props.context.authenticatedUser.id)
@@ -102,7 +104,7 @@ export default class CourseDetail extends Component {
                     <div className="course--header">
                         <h4 className="course--label">Course</h4>
                         <h3 className="course--title">{this.state.course.title}</h3>
-                        <p>By {`${this.state.course.userId}`}</p>
+                        <p>By {`${this.state.student.firstName} ${this.state.student.lastName}`}</p>
                     </div>
                     <div className="course--description">
                         <ReactMarkdown source={this.state.course.description} /> 

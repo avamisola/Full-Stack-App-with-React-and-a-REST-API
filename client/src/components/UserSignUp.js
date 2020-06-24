@@ -68,9 +68,7 @@ export default class UserSignUp extends Component {
               </React.Fragment>
             )}
           />
-          <p>
-            Already have a user account? <Link to="/signin">Click here</Link> to sign in!
-          </p>
+          <p>Already have a user account? <Link to="/signin">Click here</Link> to sign in!</p>
         </div>
       </div>
     );
@@ -104,7 +102,7 @@ export default class UserSignUp extends Component {
     if (confirmPassword !== password) {
       this.setState(() => {
         return {
-          errors: ["Password Does Not Match Confirm Password"]
+          errors: ["Password confirmation does not match."]
         };
       });
     } else {

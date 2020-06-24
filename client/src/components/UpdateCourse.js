@@ -127,21 +127,24 @@ export default class UpdateCourse extends Component {
       userId: context.authenticatedUser.id
     }
     const path = `/courses/${this.state.course_id}`;
-
-    if (context.authenticatedUser.id.toString() === this.state.user.id.toString()) {
-      context.data.updateCourse(email, password, course, path )
-      .then( errors => {
-        if (errors.length) {
-            this.setState({errors});
+    const currentUserId = Number(this.props.context.authenticatedUser.id)
+    const courseUserId = Number(course.userId)
+    if (currentUserId === courseUserId) {
+      context.data.updateCourse(email, password, path, course)
+        .then( errors => {
+          if (errors.length) {
+              this.setState({errors});
           } else {
-              this.props.history.push(`/courses/${this.state.course_id}`);
+            this.props.history.push('/');
           }
-      })
-      .catch( err => {
-          this.props.history.push('/error');
-      })
+        })
+        .catch( err => {
+            this.props.history.push('/error');
+        })
     } else {
-      window.location.replace('/forbidden');
+      this.setState({
+          errors: ['Not authorized to update course.']
+      })
     }
   }
 }

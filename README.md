@@ -1,5 +1,4 @@
-# treehouse_techdegree_project_10
- Full Stack App with React and a REST API
+# Full Stack App with React and a REST API
 
 This project uses React to render a web app that interacts with a database through a REST API. User can use web app to create, read, update, and delete (CRUD) the data in the database.
 
